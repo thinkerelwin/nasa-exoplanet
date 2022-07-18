@@ -1,5 +1,5 @@
-import { parse } from "csv-parse";
-import fs from "fs";
+const { parse } = require("csv-parse");
+const fs = require("fs");
 
 interface Planet {
   koi_disposition: string;
@@ -38,7 +38,7 @@ fs.createReadStream("./kepler_data_20220709.csv")
       habitablePlanet.push(data);
     }
   })
-  .on("error", (err) => {
+  .on("error", (err: Error) => {
     console.log(err);
   })
   .on("end", () => {

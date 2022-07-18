@@ -1,5 +1,6 @@
-import { parse } from "csv-parse";
-import fs from "fs";
+"use strict";
+const { parse } = require("csv-parse");
+const fs = require("fs");
 let habitablePlanet = [];
 function isHabitablePlanet(disposition) {
     return disposition === "CONFIRMED";
