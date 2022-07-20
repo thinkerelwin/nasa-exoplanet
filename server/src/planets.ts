@@ -1,5 +1,5 @@
-const { parse } = require("csv-parse");
-const fs = require("fs");
+import { parse } from "csv-parse";
+import fs from "fs";
 
 interface Planet {
   koi_disposition: string;

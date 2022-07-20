@@ -1,6 +1,5 @@
-"use strict";
-const http = require("http");
-const App = require("./app");
+import http from "http";
+import App from "./app.js";
 const PORT = process.env.PORT || 8000;
 const server = http.createServer(App);
 server.listen(PORT, () => {

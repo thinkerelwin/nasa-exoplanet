@@ -1,5 +1,6 @@
-"use strict";
-const express = require("express");
+import express from "express";
+import PlanetsRouter from "./routes/planets/planets.router.js";
 const app = express();
 app.use(express.json());
-module.exports = app;
+app.use(PlanetsRouter);
+export default app;
