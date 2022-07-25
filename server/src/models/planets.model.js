@@ -41,4 +41,7 @@ async function loadPlanetData() {
         console.log(error);
     }
 }
-export { habitablePlanet, loadPlanetData };
+function getAllPlanets() {
+    return habitablePlanet;
+}
+export { loadPlanetData, getAllPlanets };

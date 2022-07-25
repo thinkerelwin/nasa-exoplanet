@@ -10,4 +10,7 @@ const launch = {
     success: true,
 };
 launches.set(launch.flightNumber, launch);
-export { launches };
+function getAllLaunches() {
+    return [...launches.values()];
+}
+export { getAllLaunches };

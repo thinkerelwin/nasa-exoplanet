@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { habitablePlanet } from "../../models/planets.model.js";
+import { getAllPlanets } from "../../models/planets.model.js";
 
-function getAllPlanets(req: Request, res: Response) {
-  res.status(200).json(habitablePlanet);
+function httpGetAllPlanets(req: Request, res: Response) {
+  res.status(200).json(getAllPlanets());
 }
 
-export { getAllPlanets };
+export { httpGetAllPlanets };
