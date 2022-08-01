@@ -57,4 +57,4 @@ function abortLaunchById(launchId: number) {
   return aborted;
 }
 
-export { getAllLaunches, addNewLaunch, existedLaunchWithId, abortLaunchById };
+export { existedLaunchWithId, getAllLaunches, addNewLaunch, abortLaunchById };

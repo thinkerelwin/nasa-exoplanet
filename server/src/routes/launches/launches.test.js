@@ -7,17 +7,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import http from "http";
-import App from "./app.js";
-import { loadPlanetData } from "./models/planets.model.js";
-const PORT = process.env.PORT || 8000;
-const server = http.createServer(App);
-function startServer() {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield loadPlanetData();
-        server.listen(PORT, () => {
-            console.log(`Listening on port ${PORT}...`);
-        });
+import request from "supertest";
+import app from "../../app.js";
+describe("Test GET /launches", () => {
+    it("It should respond with 200 success", () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield request(app).get("/launches");
+        expect(response.statusCode).toBe(200);
+    }));
+});
+describe("Test POST /launch", () => {
+    it("It should respond with 200 success", () => {
+        // const response = 200;
+        // expect(response).toBe(200);
     });
-}
-startServer();
+    it("It should catch missing required properties", () => { });
+    it("It should catch invalid dates", () => { });
+});

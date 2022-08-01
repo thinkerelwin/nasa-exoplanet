@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 app.use("/planets", PlanetsRouter);
 app.use("/launches", LaunchesRouter);
 
-app.get("/", (req, res) => {
+app.get("/", (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, "..", "public", "index.html"));
 });
 
