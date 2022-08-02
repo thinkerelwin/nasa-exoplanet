@@ -4,7 +4,7 @@ import {
   addNewLaunch,
   existedLaunchWithId,
   abortLaunchById,
-} from "../../models/launches.model.js";
+} from "../../models/launches.model";
 
 function httpGetAllLaunches(req: Request, res: Response) {
   return res.status(200).json(getAllLaunches());
