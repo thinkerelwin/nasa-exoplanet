@@ -5,6 +5,7 @@
   "main": "src/server.ts",
   "scripts": {
     "dev": "nodemon src/server.ts",
+    "start": "ts-node src/server.ts",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch"
   },
