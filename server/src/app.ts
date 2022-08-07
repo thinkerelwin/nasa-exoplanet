@@ -28,6 +28,3 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 export default app;
-
-// TODO connect to mongo Atlas DB
-// mongodb+srv://Elwin:<password>@nasacluster.wfx8wlf.mongodb.net/?retryWrites=true&w=majority

@@ -4,17 +4,18 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 
+import planets from "./planets.mongo";
+
 interface Planet {
+  kepler_name: string;
+  // below areoriginal names from NASA csv data
   koi_disposition: string;
   koi_insol: number;
   koi_prad: number;
-  kepler_name: string;
 }
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
-let habitablePlanet: Planet[] = [];
 
 function isHabitablePlanet(disposition: string) {
   return disposition === "CONFIRMED";
@@ -40,28 +41,53 @@ async function loadPlanetData() {
           columns: true,
         })
       )
-      .on("data", (data: Planet) => {
+      .on("data", async (data: Planet) => {
         if (
           isHabitablePlanet(data["koi_disposition"]) &&
           idealInsolationFlux(data["koi_insol"]) &&
           isPossibleToHaveSolidSurface(data["koi_prad"])
         ) {
-          habitablePlanet.push(data);
+          await savePlanet(data);
         }
       })
       .on("error", (err: Error) => {
         throw err;
       })
-      .on("end", () => {
-        console.log(`${habitablePlanet.length} habitable planets found `);
+      .on("end", async () => {
+        const planetsFound = (await getAllPlanets()).length;
+        console.log(`${planetsFound} habitable planets found `);
       });
   } catch (error) {
     console.log(error);
   }
 }
 
-function getAllPlanets() {
-  return habitablePlanet;
+async function getAllPlanets() {
+  return await planets.find(
+    {},
+    {
+      _id: 0,
+      __v: 0,
+    }
+  );
+}
+
+async function savePlanet(planet: Planet) {
+  try {
+    return await planets.updateOne(
+      {
+        keplerName: planet.kepler_name,
+      },
+      {
+        keplerName: planet.kepler_name,
+      },
+      {
+        upsert: true,
+      }
+    );
+  } catch (error) {
+    console.error(`Failed to save the planet ${error}`);
+  }
 }
 
 export { loadPlanetData, getAllPlanets };

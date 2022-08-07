@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
 import {
   getAllLaunches,
-  addNewLaunch,
+  scheduleNewLaunch,
   existedLaunchWithId,
   abortLaunchById,
 } from "../../models/launches.model";
 
-function httpGetAllLaunches(req: Request, res: Response) {
-  return res.status(200).json(getAllLaunches());
+async function httpGetAllLaunches(req: Request, res: Response) {
+  return res.status(200).json(await getAllLaunches());
 }
 
-function httpAddNewLaunch(req: Request, res: Response) {
+async function httpAddNewLaunch(req: Request, res: Response) {
   const launch = req.body;
 
   if (
@@ -35,23 +35,29 @@ function httpAddNewLaunch(req: Request, res: Response) {
     });
   }
 
-  addNewLaunch(launchWithTransformedDate);
+  await scheduleNewLaunch(launchWithTransformedDate);
   return res.status(201).json(launchWithTransformedDate);
 }
 
-function httpAbortLaunch(req: Request, res: Response) {
+async function httpAbortLaunch(req: Request, res: Response) {
   const id = req.params.id;
 
-  if (!existedLaunchWithId(Number(id))) {
+  if (!(await existedLaunchWithId(Number(id)))) {
     return res.status(404).json({
       error: "Launch not found",
     });
   }
 
-  const aborted = abortLaunchById(Number(id));
+  const aborted = await abortLaunchById(Number(id));
+
+  if (!aborted) {
+    return res.status(400).json({
+      error: "Launch not aborted",
+    });
+  }
 
   return res.status(200).json({
-    aborted,
+    ok: true,
   });
 }
 
