@@ -6,8 +6,12 @@ import {
   abortLaunchById,
 } from "../../models/launches.model";
 
+import { getPagination } from "../../services/query";
+
 async function httpGetAllLaunches(req: Request, res: Response) {
-  return res.status(200).json(await getAllLaunches());
+  const { skip, limit } = getPagination(req.query);
+  const launche = await getAllLaunches(skip, limit);
+  return res.status(200).json(launche);
 }
 
 async function httpAddNewLaunch(req: Request, res: Response) {
@@ -19,7 +23,6 @@ async function httpAddNewLaunch(req: Request, res: Response) {
     !launch.launchDate ||
     !launch.target
   ) {
-    console.log("launch", launch);
     return res.status(400).json({
       error: "Missing required launch property",
     });
@@ -40,6 +43,8 @@ async function httpAddNewLaunch(req: Request, res: Response) {
 }
 
 async function httpAbortLaunch(req: Request, res: Response) {
+  const { page, limit } = req.query;
+
   const id = req.params.id;
 
   if (!(await existedLaunchWithId(Number(id)))) {
