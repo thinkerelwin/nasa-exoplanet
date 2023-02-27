@@ -4,8 +4,7 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import morgan from "morgan";
 
-import PlanetsRouter from "./routes/planets/planets.router";
-import LaunchesRouter from "./routes/launches/launches.router";
+import api from "./routes/v1/api";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -20,8 +19,8 @@ app.use(
 app.use(morgan("combined"));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "..", "public")));
-app.use("/planets", PlanetsRouter);
-app.use("/launches", LaunchesRouter);
+
+app.use("/v1", api);
 
 app.get("/", (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, "..", "public", "index.html"));
