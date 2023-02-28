@@ -1,5 +1,6 @@
 import https from "https";
 import fs from "fs";
+
 import "dotenv/config";
 
 import App from "./app";
@@ -10,8 +11,8 @@ import { connectMongo } from "./services/mongo";
 const PORT = process.env.PORT || 8000;
 const server = https.createServer(
   {
-    key: fs.readFileSync("key.pem"),
-    cert: fs.readFileSync("cert.pem"),
+    key: fs.readFileSync("../certificate/key.pem"),
+    cert: fs.readFileSync("../certificate/cert.pem"),
   },
   App
 );
